@@ -1,0 +1,3 @@
+export const QUESTION_TIME_SECONDS = 20;
+export const AUTO_ADVANCE_DELAY_SECONDS = 4;
+export const QUESTIONS_PER_LEVEL = 10;
