@@ -33,6 +33,7 @@ export function PlayerOnboarding({
           onChange={(event) => setName(event.target.value)}
           placeholder="Jogador"
           maxLength={40}
+          autoFocus={mode === "modal"}
           className="rounded-xl border-2 border-terracotta-100 bg-white px-4 py-2.5 text-ink outline-none focus:border-terracotta-500"
         />
       </div>
