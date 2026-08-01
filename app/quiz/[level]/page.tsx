@@ -3,15 +3,9 @@
 import { use, useState } from "react";
 import { notFound } from "next/navigation";
 import { QuizRun } from "./QuizRun";
-import type { Level } from "@/data/questions";
+import { LEVEL_LABELS, type Level } from "@/data/questions";
 
 const VALID_LEVELS: Level[] = ["iniciante", "intermediario", "avancado"];
-
-const LEVEL_LABELS: Record<Level, string> = {
-  iniciante: "Iniciante",
-  intermediario: "Intermediário",
-  avancado: "Avançado",
-};
 
 interface QuizPageProps {
   params: Promise<{ level: string }>;

@@ -22,7 +22,6 @@ export default function ProgressPage() {
     isReady,
     updateName,
     getAttemptsByLevel,
-    getHighScore,
     getWrongQuestionsSummary,
   } = useIndexedDB();
   const [levelData, setLevelData] = useState<Record<
@@ -41,10 +40,11 @@ export default function ProgressPage() {
     (async () => {
       const entries = await Promise.all(
         LEVELS.map(async (level) => {
-          const [attempts, highScore] = await Promise.all([
-            getAttemptsByLevel(level),
-            getHighScore(level),
-          ]);
+          const attempts = await getAttemptsByLevel(level);
+          const highScore =
+            attempts.length === 0
+              ? 0
+              : Math.max(0, ...attempts.map((attempt) => attempt.score));
           return [level, { attempts, highScore }] as const;
         }),
       );
@@ -57,7 +57,7 @@ export default function ProgressPage() {
     return () => {
       cancelled = true;
     };
-  }, [isReady, getAttemptsByLevel, getHighScore, getWrongQuestionsSummary]);
+  }, [isReady, getAttemptsByLevel, getWrongQuestionsSummary]);
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col gap-8 px-4 py-10 sm:py-16">

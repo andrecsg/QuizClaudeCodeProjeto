@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Timer } from "@/components/Timer";
 import { QuestionCard } from "@/components/QuestionCard";
@@ -41,6 +48,7 @@ const initialState: QuizState = {
 function quizReducer(state: QuizState, action: QuizAction): QuizState {
   switch (action.type) {
     case "ANSWER":
+      if (state.phase !== "answering") return state;
       return {
         ...state,
         phase: "feedback",
@@ -77,11 +85,12 @@ export function QuizRun({ level, onPlayAgain }: QuizRunProps) {
   const startedAtRef = useRef<number | null>(null);
   const hasSavedRef = useRef(false);
 
-  useEffect(() => {
+  // useLayoutEffect (not useEffect) so the shuffle is committed before the
+  // browser paints — avoids a flash of the unshuffled order. Shuffling
+  // during render itself would break hydration, since Math.random() would
+  // run differently on the server and client passes.
+  useLayoutEffect(() => {
     startedAtRef.current = Date.now();
-    // Shuffling here (client-only, post-mount) is intentional: doing it
-    // during render would make Math.random() run differently on the
-    // server and client passes and break hydration.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setQuestions(shuffleArray(getQuestionsByLevel(level)));
     // eslint-disable-next-line react-hooks/exhaustive-deps

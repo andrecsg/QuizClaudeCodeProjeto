@@ -1,11 +1,5 @@
 import Link from "next/link";
-import type { Level } from "@/data/questions";
-
-const LEVEL_LABELS: Record<Level, string> = {
-  iniciante: "Iniciante",
-  intermediario: "Intermediário",
-  avancado: "Avançado",
-};
+import { LEVEL_LABELS, type Level } from "@/data/questions";
 
 interface ResultSummaryProps {
   level: Level;

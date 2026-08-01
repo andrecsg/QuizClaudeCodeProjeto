@@ -1,11 +1,5 @@
 import type { Attempt } from "@/lib/db";
-import type { Level } from "@/data/questions";
-
-const LEVEL_LABELS: Record<Level, string> = {
-  iniciante: "Iniciante",
-  intermediario: "Intermediário",
-  avancado: "Avançado",
-};
+import { LEVEL_LABELS, type Level } from "@/data/questions";
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleString("pt-BR", {

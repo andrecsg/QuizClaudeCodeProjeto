@@ -1,5 +1,11 @@
 export type Level = "iniciante" | "intermediario" | "avancado";
 
+export const LEVEL_LABELS: Record<Level, string> = {
+  iniciante: "Iniciante",
+  intermediario: "Intermediário",
+  avancado: "Avançado",
+};
+
 export interface Question {
   id: string;
   level: Level;
